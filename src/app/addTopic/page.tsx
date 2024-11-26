@@ -1,6 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { redirect, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function AddTopicPage() {
@@ -33,6 +34,10 @@ export default function AddTopicPage() {
       console.log(error);
     }
   };
+  const { data: session } = useSession();
+  if (!session) {
+    redirect('/login');
+  }
 
   return (
     <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
